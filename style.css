@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #121212;
+  background-color: #423d20ff;
 }
 
 header {
@@ -12,10 +12,10 @@ header {
 }
 
 h1 {
-  color: #1a1a2e;
+  color: #fcfcfc;
 }
 h2{
-    color :#00f2ff;
+    color :#f8fbfb;
 }
 section {
   padding: 20px 50px;
@@ -23,10 +23,11 @@ section {
 
 .project-card {
   display: flex;
-  background-color: #1a1a2e;
+  background-color: #00231e;
   margin: 10px 0;
   padding: 15px;
   border-radius: 10px;
+
 }
 
 .project-card img {
