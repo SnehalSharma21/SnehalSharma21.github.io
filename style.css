@@ -23,10 +23,12 @@ section {
 
 .project-card {
   display: flex;
-  background-color: #00231e;
+  background-color: #021c18;
   margin: 10px 0;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 10px ;
+  color: #f8fbfb;
+  border:2px solid #353506;
 
 }
 
@@ -35,3 +37,8 @@ section {
   max-width: 300px;
   display: block;
 }
+.card{
+  color: rgb(245, 246, 246);
+  border:2px solid #353506;
+}
+
