@@ -29,7 +29,7 @@ section {
   border-radius: 10px ;
   color: #f8fbfb;
   border:2px solid #353506;
-
+  gap:20px;
 }
 
 .project-card img {
@@ -37,12 +37,13 @@ section {
   height: auto;
   max-width: 300px;
   display: block;
-  margin: 20px;
+  
 }
 .card{
   color: rgb(245, 246, 246);
   border:2px solid #353506;
   width: auto;
   height: auto;
+  gap: 20px;
 }
 
