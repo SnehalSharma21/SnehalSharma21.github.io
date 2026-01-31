@@ -37,6 +37,7 @@ section {
   height: auto;
   max-width: 300px;
   display: block;
+  margin: 20px;
 }
 .card{
   color: rgb(245, 246, 246);
