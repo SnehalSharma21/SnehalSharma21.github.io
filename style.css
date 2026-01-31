@@ -33,12 +33,15 @@ section {
 }
 
 .project-card img {
-  width: 100%;
+  width: auto;
+  height: auto;
   max-width: 300px;
   display: block;
 }
 .card{
   color: rgb(245, 246, 246);
   border:2px solid #353506;
+  width: auto;
+  height: auto;
 }
 
