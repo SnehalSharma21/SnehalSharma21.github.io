@@ -1,96 +1,242 @@
-<html>
-<!-- <html lang="en"> -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- <meta charset="UTF-8"> -->
-  <title>Snehal Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snehal Sharma | Glassmorphism Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --glass-bg: rgba(255,255,255,0.15);
+    --glass-border: rgba(255,255,255,0.25);
+    --glass-shadow: 0 8px 32px rgba(31,38,135,0.37);
+    --glass-blur: blur(12px);
+    --gradient-primary: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    --text-dark: #1a1a1a;
+    --text-muted: #64748b;
+    --bg-gradient: linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);
+  }
+  [data-theme="dark"] {
+    --glass-bg: rgba(20,20,45,0.6);
+    --glass-border: rgba(122,102,255,0.3);
+    --text-dark: #f1f5f9;
+    --text-muted: #cbd5e1;
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.8),0 0 15px rgba(102,126,234,0.2);
+    --bg-gradient: radial-gradient(circle at top right,#1e1b4b,#0f172a,#020617);
+  }
+  body { font-family:'Poppins',sans-serif; background:var(--bg-gradient); color:var(--text-dark); overflow-x:hidden; line-height:1.6; transition:0.4s; }
+  .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+  /* THEME TOGGLE */
+  .theme-toggle { position:fixed;top:25px;right:25px;width:65px;height:32px;background:var(--glass-bg);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border);border-radius:50px;display:flex;align-items:center;padding:4px;cursor:pointer;box-shadow:var(--glass-shadow); }
+  .toggle-ball { width:24px;height:24px;background:white;border-radius:50%;transition:transform 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);}
+  [data-theme="dark"] .toggle-ball { transform:translateX(33px); }
+
+  /* NAVBAR */
+  .navbar { position:fixed;top:0;width:100%;backdrop-filter:var(--glass-blur);background:var(--glass-bg);border-bottom:1px solid var(--glass-border);z-index:999;padding:1rem 0; }
+  .nav-container { max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center; }
+  .logo { font-size:1.8rem;font-weight:700;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .nav-menu { display:flex; list-style:none; gap:2.5rem;}
+  .nav-link { color:var(--text-dark); text-decoration:none;font-weight:500; }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:center; padding-top:90px; }
+  .hero-content { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;}
+  .hero-title { font-size:clamp(3rem,6vw,5rem); font-weight:700; }
+  .gradient-text { background:var(--gradient-primary); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero-subtitle { font-size:1.6rem;color:var(--text-muted); margin-bottom:1.5rem; font-weight:500; }
+  .hero-desc { font-size:1.25rem; margin-bottom:3rem; color:var(--text-muted); max-width:500px; }
+  .btn { padding:16px 40px;border-radius:50px;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:0.5rem;backdrop-filter:var(--glass-blur);border:2px solid var(--glass-border);}
+  .btn-primary { background:var(--gradient-primary); color:white;}
+  .btn-secondary { color:var(--text-dark); }
+
+  .code-window { background:var(--glass-bg);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border);border-radius:24px;padding:3rem;box-shadow:var(--glass-shadow);font-family:'Courier New',monospace; }
+  .code-line { color:#a5b4fc;margin-bottom:1rem; }
+
+  /* SECTIONS */
+  .section { padding:100px 0; }
+  .section h2 { text-align:center; margin-bottom:2rem; }
+
+  /* ABOUT */
+  #about p { max-width:800px; margin:1rem auto; text-align:center; font-size:1.2rem; color:var(--text-muted); }
+
+  /* SKILLS */
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; max-width:1000px; margin:0 auto; }
+  .skill-card { background:var(--glass-bg); backdrop-filter:var(--glass-blur); border:1px solid var(--glass-border); border-radius:20px; padding:1.5rem; text-align:center; box-shadow:var(--glass-shadow); }
+  .skill-icon { font-size:2.5rem; margin-bottom:0.8rem; }
+  .skill-card h3 { font-size:1.1rem; margin-bottom:1rem; }
+  .skill-bar { height:8px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
+  .skill-progress { height:100%; background:var(--gradient-primary); width:0; transition:width 2s ease; }
+
+  /* PROJECTS */
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(350px,1fr)); gap:2rem; }
+  .project-card { background:var(--glass-bg); backdrop-filter:var(--glass-blur); border:1px solid var(--glass-border); border-radius:24px; box-shadow:var(--glass-shadow); }
+  .project-content { padding:2rem; }
+
+  /* CONTACT */
+  .contact { text-align:center; padding:100px 0; }
+  .social-logos { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:2rem; }
+  .social-logo { padding:1.5rem 2rem; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:20px; text-decoration:none; color:var(--text-dark); transition:all 0.4s ease; min-width:150px; display:inline-block; }
+  .social-logo:hover { background:var(--gradient-primary); color:white; }
+
+  footer { text-align:center; padding:2rem; background:#1e1b4b; color:white; }
+
+  /* RESPONSIVE */
+  @media (max-width:768px) {
+    .hero-content { grid-template-columns:1fr; text-align:center; gap:2rem;}
+  }
+  .education {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+  border-radius: 15px;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeUp 1s ease;
+}
+
+.education:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+.education h1 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  background: linear-gradient(to right, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.education h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.education h3 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.education p {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.education p span {
+  color: #4facfe;
+  font-weight: 600;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+</style>
 </head>
-<body>
-  <header>
-    <h1>Snehal Sharma</h1>
-    <p>Python Django Student | Full Stack Enthusiast</p>
-  </header>
+<body data-theme="light">
 
-  <section  class="project-card" >
-   <div class="card">
-     <h2>Technical Information</h2>
-     <p >
-      I am a passionate web developer with expertise in Python and Django for backend development, 
-      and HTML & CSS for frontend design. I have experience working with databases like SQLite and 
-      using version control tools such as Git and GitHub to manage and collaborate on projects efficiently. 
-      Alongside my technical skills, I have strong problem-solving abilities, teamwork experience, 
-      and a quick learning attitude which allows me to adapt to new technologies and contribute effectively 
-      to web development projects.
-     </p>
-   </div>
-  <div class="card">
-    <h2>Education</h2>
-    <p><strong>Percentage</strong>93.53</p>
-    <h3>deploma in computer engineering</h3>
-    <h3>Goverment Polytechnic Jalgoan</h3>
-    <p><strong>Percentage</strong>93.20</p>
-    <h3>ssc</h3>
-    <h3>maharashtra State board</h3>
-  </section>
-</div>
-<section class="project-card">
+<div class="theme-toggle"><span>☀️</span><span>🌙</span><div class="toggle-ball"></div></div>
 
-  <div class="card">
-    <h2>Skills</h2>
-     <ul>
-       <li>Frontend
-         <ul>
-           <li>HTML</li>
-           <li>CSS</li>
-           <li>JavaScript</li>
-         </ul>
-       </li>
-       <li>Backend
-         <ul>
-           <li>Python</li>
-           <li>Django</li>
-         </ul>
-       </li>
-       <li>Database
-          <ul>
-           <li>MySQL</li>
-           <li>SQLite</li>
-          </ul>
-       </li>
-       <li>Languages
-          <ul>
-           <li>Python</li>
-           <li>Java</li>
-         </ul>
-       </li>
-         </ul>
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">Snehal Sharma</div>
+    <ul class="nav-menu">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="home" class="hero">
+  <div class="container hero-content">
+    <div>
+      <h1 class="hero-title">Snehal <span class="gradient-text">here 👋</span></h1>
+      <h2 class="hero-subtitle">Frontend Developer | React & Angular</h2>
+      <p class="hero-desc">Crafting clean and intuitive web interfaces with a modern glassmorphism touch</p>
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <!-- <a href="resume.pdf" class="btn btn-secondary" download>Download Resume</a> -->
+    </div>
+    <div class="code-window">
+      <section class="education">
+         <h1>Education</h1>
+         <h2>Diploma in Computer Engineering</h2>
+         <h3>3rd Year (Pursuing)</h3>
+         <p><span>Core Focus:</span> Programming, Web Development, Databases</p>
+      </section>
+
+    </div>
   </div>
 </section>
 
-<div class="card">
-  <section id="projects">
-    <h2>Featured Projects</h2>
-    <div class="project-card">
-      <img src="images/project1.jpg" alt="Project 1">
-      <h3>College Alumni Portal</h3>
-      <p><a href="projects/project1.html">View Details</a></p>
-    </div>
+<section id="about" class="section">
+  <h2>About <span class="gradient-text">Me</span></h2>
+  <p>I’m a frontend-focused web developer passionate about building modern, responsive, and user-friendly interfaces. Skilled in React, Angular, HTML, CSS, and JavaScript, I create projects that are both functional and visually appealing.</p>
+</section>
 
-    
-  </section>
-</div>
+<section id="skills" class="section">
+  <h2>My <span class="gradient-text">Skills</span></h2>
+  <div class="skills-grid">
+    <div class="skill-card" data-width="95"><div class="skill-icon">📄</div><h3>HTML/CSS</h3><div class="skill-bar"><div class="skill-progress"></div></div></div>
+    <div class="skill-card" data-width="90"><div class="skill-icon">⚡</div><h3>JavaScript</h3><div class="skill-bar"><div class="skill-progress"></div></div></div>
+    <div class="skill-card" data-width="85"><div class="skill-icon">🔧</div><h3>Angular</h3><div class="skill-bar"><div class="skill-progress"></div></div></div>
+    <div class="skill-card" data-width="75"><div class="skill-icon">⚛️</div><h3>React</h3><div class="skill-bar"><div class="skill-progress"></div></div></div>
+  </div>
+</section>
 
-  <section id="education">
-    <h2>Currently working on</h2>
-    <ul>
-      <li>AI Student Analyzer System</li>
-    </ul>
-    <p>Developing a data-driven student analytics system that leverages machine learning to evaluate academic performance and deliver personalized learning recommendations.</p>
-    <ul>
-        <li></li>
-        <li>pandas</li>
-        <li>Django API</li>
-    </ul>
-  </section>
+<section id="projects" class="section">
+  <h2>Featured <span class="gradient-text">Projects</span></h2>
+  <div class="projects-grid">
+    <div class="project-card"><div class="project-content"><h3>College Alumni Dashboard</h3><p>A modern dashboard to connect alumni with college.</p></div></div>
+    <div class="project-card"><div class="project-content"><h3>AI Student Analyzer</h3><p>Academic performance analysis using Python & ML.</p></div></div>
+    <div class="project-card"><div class="project-content"><h3>Currency Converter</h3><p>A simple web app to convert currencies with live exchange rates.</p></div></div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Get In <span class="gradient-text">Touch</span></h2>
+  <div class="social-logos">
+    <a href="https://github.com/SnehalSharma21" target="_blank" class="social-logo">GitHub</a>
+    <a href="https://www.linkedin.com/in/snehal-sharma-02b43b344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-logo">LinkedIn</a>
+  </div>
+</section>
+
+<footer>© 2026 Snehal Ramkishan Sharma | Built with Glassmorphism</footer>
+
+<script>
+  // Theme Toggle
+  const toggle = document.querySelector('.theme-toggle');
+  const body = document.body;
+  toggle.addEventListener('click', () => { body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark'; });
+
+  // Skill bar animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const card = entry.target;
+        const progress = card.querySelector('.skill-progress');
+        progress.style.width = card.dataset.width + '%';
+      }
+    });
+  }, {threshold:0.5});
+  document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+</script>
 </body>
 </html>
